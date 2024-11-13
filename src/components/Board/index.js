@@ -144,12 +144,9 @@ class Board extends React.Component {
 
   getRevealed = () => {
     return this.state.grid
-      .reduce((r, v) => {
-        r.push(...v);
-        return r;
-      }, [])
-      .map((v) => v.isRevealed)
-      .filter((v) => !!v).length;
+      .flatMap(row => row)  // 将二维数组平铺成一维数组
+      .filter(cell => cell.isRevealed)  // 只保留已揭示的单元格
+      .length;  // 返回已揭示单元格的数量
   };
 
   killBoard(type) {
