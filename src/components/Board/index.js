@@ -56,7 +56,7 @@ class Board extends React.Component {
     return minesArray;
   }
 
-  // 将新生成的 GridCell 添加到网格中
+  // Reference: CodeSandBox
   addGridCell(grid, gridCell) {
     const y = grid.length - 1;
     const x = grid[y].length;

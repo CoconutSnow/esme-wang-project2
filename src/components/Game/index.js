@@ -1,9 +1,14 @@
+// src/components/Game/index.js
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";  // 获取路由参数
+import { GameContext } from "../../context/GameContext"; // 导入 GameContext
 import Board from "../Board";
 import "./style.css";
 
+// 使用 static contextType 来访问 Context 中的状态
 class Game extends React.Component {
+  static contextType = GameContext;  // 引入 GameContext
+
   constructor(props) {
     super(props);
 
@@ -20,6 +25,7 @@ class Game extends React.Component {
 
   handleGameEnd = (message) => {
     this.setState({ gameStatusMessage: message });
+    this.context.setIsGameActive(false); // 使用 Context 更新游戏状态
   };
 
   componentDidUpdate(prevProps) {
@@ -52,6 +58,8 @@ class Game extends React.Component {
   restartGame = () => {
     this.boardElement.current.restartBoard(); // 重新生成地雷布局
     this.setState({ gameStatusMessage: "" }); // 清空游戏状态提示
+    this.context.setScore(0);  // 使用 Context 重置分数
+    this.context.setIsGameActive(true); // 使用 Context 启动游戏
   };
 
   render() {
@@ -81,7 +89,8 @@ class Game extends React.Component {
   }
 }
 
+// 使用 useParams 获取 difficulty 参数
 export default function GameWithParams() {
-  const { difficulty } = useParams();
-  return <Game difficulty={difficulty} />;
+  const { difficulty } = useParams(); // 获取路由中的 difficulty 参数
+  return <Game difficulty={difficulty} />;  // 将 difficulty 参数传递给 Game 组件
 }
