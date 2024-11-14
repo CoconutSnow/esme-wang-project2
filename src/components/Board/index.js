@@ -6,7 +6,7 @@ import "./style.css";
 class Board extends React.Component {
   state = {
     ...this.getInitialState(),
-    isFirstClick: true, // 标记是否为首次点击
+    isFirstClick: true,
   };
 
   getInitialState() {
@@ -18,7 +18,6 @@ class Board extends React.Component {
     };
   }
 
-  // 创建新的地雷布局
   createNewBoard(click = null) {
     const grid = [];
     const rows = this.props.width;
@@ -37,13 +36,12 @@ class Board extends React.Component {
     return grid;
   }
 
-  // 随机生成地雷位置，排除首次点击位置
+  // Extra point: safe first turn
   getRandomMines(amount, columns, rows, starter = null) {
     const minesArray = [];
     const limit = columns * rows;
     const minesPool = [...Array(limit).keys()];
 
-    // 如果指定了首次点击位置，则排除该位置
     if (starter !== null && starter >= 0 && starter < limit) {
       minesPool.splice(starter, 1);
     }
@@ -74,7 +72,6 @@ class Board extends React.Component {
     grid[y].push(gridCell);
   }
 
-  // 显示整个地雷布局
   revealBoard() {
     const grid = this.state.grid;
     for (const row of grid) {
@@ -85,15 +82,13 @@ class Board extends React.Component {
     this.setState({});
   }
 
-  // 重置游戏板
   restartBoard() {
     this.setState({
       ...this.getInitialState(),
-      isFirstClick: true, // 重置首次点击标记
+      isFirstClick: true, 
     });
   }
 
-  /* 辅助方法 */
   getNeighbours(grid, y, x) {
     const neighbours = [];
     const currentRow = grid[y];
@@ -144,9 +139,9 @@ class Board extends React.Component {
 
   getRevealed = () => {
     return this.state.grid
-      .flatMap(row => row)  // 将二维数组平铺成一维数组
-      .filter(cell => cell.isRevealed)  // 只保留已揭示的单元格
-      .length;  // 返回已揭示单元格的数量
+      .flatMap(row => row) 
+      .filter(cell => cell.isRevealed) 
+      .length; 
   };
 
   killBoard(type) {
@@ -159,20 +154,17 @@ class Board extends React.Component {
     });
   }
 
-  // 左键点击处理
   handleLeftClick(y, x) {
     const grid = this.state.grid;
     const gridCell = grid[y][x];
   
-    // 确保首次点击不在地雷上
     if (this.state.isFirstClick) {
       if (gridCell.isMine) {
-        // 重新生成地雷布局并确保首次点击安全
+        // make sure safe first click
         this.setState({
           grid: this.createNewBoard(y * this.props.width + x),
           isFirstClick: false,
         }, () => {
-          // 在新布局上模拟再次点击，确保首次点击生效
           this.handleLeftClick(y, x);
         });
         return;
@@ -180,7 +172,6 @@ class Board extends React.Component {
       this.setState({ isFirstClick: false });
     }
   
-    // 处理正常点击
     gridCell.isClicked = true;
     if (gridCell.isRevealed || gridCell.isFlagged) return false;
     if (gridCell.isMine) {
@@ -199,8 +190,6 @@ class Board extends React.Component {
     });
   }
   
-
-  // 右键点击处理
   handleRightClick(e, y, x) {
     e.preventDefault();
     const grid = this.state.grid;
@@ -216,7 +205,6 @@ class Board extends React.Component {
     this.setState({ minesCount: minesLeft });
   }
 
-  // 渲染游戏板
   renderBoard() {
     const grid = this.state.grid;
     return grid.map((row) => {
@@ -244,7 +232,6 @@ class Board extends React.Component {
   }
 }
 
-// 定义 GridCell 类
 class GridCell {
   constructor(y, x, isMine) {
     this.x = x;
@@ -261,7 +248,6 @@ class GridCell {
   }
 }
 
-// PropTypes 类型检查
 Board.propTypes = {
   height: PropTypes.number,
   width: PropTypes.number,

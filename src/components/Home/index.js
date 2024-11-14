@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css'; // 引入样式文件
+import './style.css';
 
 const Home = () => {
   return (

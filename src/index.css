@@ -1,11 +1,10 @@
-/* 基本页面设置 */
 body {
   margin: 0;
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif; /* 使用更统一的字体 */
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to bottom right, #f0e4d7, #d4c4af); /* 页面渐变背景 */
-  color: #2c2c2c; /* 主体字体颜色 */
+  background: linear-gradient(to bottom right, #f0e4d7, #d4c4af);
+  color: #2c2c2c;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +12,6 @@ body {
   padding-top: 100px;
 }
 
-/* 代码字体 */
 code {
   font-family: 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
   background-color: #f4f4f4;
@@ -22,7 +20,6 @@ code {
   border-radius: 4px;
 }
 
-/* 响应式设计 */
 @media (max-width: 768px) {
   body {
     font-size: 0.9em;
