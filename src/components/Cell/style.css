@@ -1,55 +1,70 @@
 .cell {
-    display: flex;
-    background-color: rgb(26, 138, 123);
-    min-width: 30px;
-    min-height: 30px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 4px;
-    color: #fff;
-    font-weight: 600;
-    transition: background-color 0.2s;
+  display: flex;
+  background-color: rgb(26, 138, 123);
+  min-width: 30px;
+  min-height: 30px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.cell:not(first-child) {
+  margin-left: 5px;
+}
+
+.cell:focus {
+  outline: none;
+}
+
+.cell.hidden {
+  background-color: rgb(16, 74, 78);
+}
+
+/* Hover effect for unselected cells */
+.cell.hidden:hover {
+  background-color: rgb(23, 119, 125);
+}
+
+/* Incorrectly flagged cells */
+.cell.is-flag:not(.is-mine):not(.hidden) {
+  background-color: rgb(21, 149, 154);
+}
+
+.cell.is-flag.is-mine:not(.hidden) {
+  background-color: #6ba871;
+}
+
+/* Clicked on a mine */
+.cell.is-mine.is-clicked {
+  background-color: rgb(27, 175, 180);
+  content: "💣";
+}
+
+.cell.is-empty:not(.hidden):not(.is-mine):not(.is-flagged) {
+  background-color: rgb(11, 110, 96);
+  color: #eee;
+}
+
+.cell:not(.hidden):not(.is-mine):not(.is-empty) {
+  background-color: rgb(11, 110, 96);
+  color: #ddd;
+}
+
+@media only screen and (max-width: 768px) {
+  .cell {
+    min-width: 5vw;
+    min-height: 5vw;
   }
-  
+
+  .grid {
+    gap: 1px;
+  }
+
   .cell:not(first-child) {
-    margin-left: 5px;
+    margin-left: 2px;
   }
-  
-  .cell:focus {
-    outline: none;
-  }
-  
-  .cell.hidden {
-    background-color: rgb(16, 74, 78);
-  }
-  
-  /* Hover effect for unselected cells */
-  .cell.hidden:hover {
-    background-color: rgb(23, 119, 125);
-  }
-  
-  /* Incorrectly flagged cells */
-  .cell.is-flag:not(.is-mine):not(.hidden) {
-    background-color: rgb(21, 149, 154);
-  }
-  
-  .cell.is-flag.is-mine:not(.hidden) {
-    background-color: #6ba871;
-  }
-  
-  /* Clicked on a mine */
-  .cell.is-mine.is-clicked {
-    background-color: rgb(27, 175, 180);
-    content: "💣";
-  }
-  
-  .cell.is-empty:not(.hidden):not(.is-mine):not(.is-flagged) {
-    background-color: rgb(11, 110, 96);
-    color: #eee; 
-  }
-  
-  .cell:not(.hidden):not(.is-mine):not(.is-empty) {
-    background-color: rgb(11, 110, 96);
-    color: #ddd; 
-  }
+}
